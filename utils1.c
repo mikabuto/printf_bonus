@@ -2,18 +2,8 @@
 
 void	init_tab(t_print *tab)
 {
-	tab->wdt = 0;		//width field
-	tab->prc = 0;		//precision
-	tab->zero = 0;		// flag '0'
-	tab->pnt = 0;		// .
-	tab->dash = 0;		// -
-	tab->tl = 0;		//total length
-	tab->sign = 0;		//pos or neg numer
-	tab->is_zero = 0;	//is number zero?
-	tab->perc = 0;		// %
-	tab->sp = 0;		// ' '
-	tab->hash = 0;		// #
-	tab->plus = 0;		// +
+	clear_tab(tab);
+	tab->tl = 0;
 }
 
 int	cspdiuxX(char c)

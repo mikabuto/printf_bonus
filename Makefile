@@ -1,7 +1,7 @@
 NAME = libftprintf.a
 
-SRCS = ft_printf.c ft_printf_utils1.c \
-		ft_printf_utils2.c
+SRCS = printme.c utils1.c utils2.c printf_bonus.c \
+		hex.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -18,6 +18,8 @@ $(NAME) : $(OBJS)
 
 %.o : %.c $(HEADER)
 	$(CC) $(FLAGS) -c $< -o $@
+
+bonus : re
 
 clean :
 	$(RM) $(OBJS)
