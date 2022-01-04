@@ -1,7 +1,7 @@
 NAME = libftprintf.a
 
-SRCS = printme.c utils1.c utils2.c printf_bonus.c \
-		hex.c
+SRCS = printme.c printf_bonus.c hex.c \
+		utils1.c utils2.c utils3.c utils4.c
 
 OBJS = $(SRCS:.c=.o)
 

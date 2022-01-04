@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   printf_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mikabuto <mikabuto@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/04 14:30:16 by mikabuto          #+#    #+#             */
+/*   Updated: 2022/01/04 14:30:16 by mikabuto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int	conversions(char c, t_print *tab, int pos)
@@ -5,25 +17,28 @@ int	conversions(char c, t_print *tab, int pos)
 	if (c == 'c')
 		return (ft_print_char(tab) + pos);
 	if (c == 's')
-	 	return (ft_print_str(tab) + pos);
-	// if (c == 'p')
-	// 	return (int_ft_putptr(va_arg(ap, unsigned long)));
+		return (ft_print_str(tab) + pos);
+	if (c == 'p')
+		return (ft_putptr(tab) + pos);
 	if (c == 'd' || c == 'i')
-		return(ft_putnbr(tab) + pos);
-	// if (c == 'u')
-	// 	return(int_ft_putunsnbr(va_arg(ap, unsigned int)));
+		return (ft_putnbr(tab) + pos);
+	if (c == 'u')
+		return (ft_putunsnbr(tab) + pos);
 	if (c == 'X')
-		return(ft_putneghex(tab, 55) + pos);
+		return (ft_putneghex(tab, 55) + pos);
 	if (c == 'x')
-		return(ft_putneghex(tab, 87) + pos);
-	// if (c == '%')
-	// 	return (int_ft_putchar('%'));
+		return (ft_putneghex(tab, 87) + pos);
+	if (c == '%')
+	{
+		tab->perc = 1;
+		return (ft_print_perc(tab) + pos);
+	}
 	return (0);
 }
 
 int	ft_eval_format(t_print *tab, const char *format, int pos)
 {
-	while (format[pos] && !cspdiuxX(format[pos]))
+	while (format[pos] && !cspdiux(format[pos]))
 	{
 		if (format[pos] == '.')
 			pos = eval_prc_wdt(&(tab->prc), &(tab->pnt), format, pos + 1);
@@ -37,20 +52,19 @@ int	ft_eval_format(t_print *tab, const char *format, int pos)
 			pos += increase_pos(&(tab->sp));
 		if (format[pos] == '+')
 			pos += increase_pos(&(tab->plus));
-		// if (format[pos] > '0' && format[pos] <= '9')
-		// {
-		// 	while (format[pos] >= '0' && format[pos] <= '9')
-		// 	{
-		// 		tab->wdt = tab->wdt * 10 + format[pos] - '0';
-		// 		++pos;
-		// 	}
-		// }
+		if (format[pos] > '0' && format[pos] <= '9')
+		{
+			while (format[pos] >= '0' && format[pos] <= '9')
+			{
+				tab->wdt = tab->wdt * 10 + format[pos] - '0';
+				++pos;
+			}
+		}
 	}
-	// printf("pos = %d\ntab->pnt = %d\n", pos, tab->pnt);
 	return (conversions(format[pos], tab, pos));
 }
 
-int ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
 	int		i;
 	int		ret;
@@ -76,21 +90,18 @@ int ft_printf(const char *format, ...)
 	return (ret);
 }
 
-int	main(void)
-{
-	char	s[] = "%-18.2s\n";
-	char	s1[] = "yolololo";
-	int a;
-	int b;
-	ft_printf("012345678901234567890123456789\n");
-	//ft_printf("%s\n", "meow!");
-	printf("%.2d|\n", 123);
-	ft_printf("%d|\n", 123);
-	//ft_printf(" %-1X |meow\n", 0);
-	// a = ft_printf(s, s1);
-	// b = printf(s, s1);
-	// if (a == b)
-	// 	printf("return is fine!\n");
-	// else
-	// 	printf("your func returns %d\noriginal returns %d\n", a, b);
-}
+// int	main(void)
+// {
+// 	char	s[] = "%02.0d|\n";
+// 	//char	s1[] = "";
+// 	int dec = 0;
+// 	int a;
+// 	int b;
+// 	ft_printf("012345678901234567890123456789\n");
+// 	a = printf(s, dec);
+// 	b = ft_printf(s, dec);
+// 	if (a == b)
+// 		printf("return is fine!\n");
+// 	else
+// 		printf("original returns %d\nyour func returns %d\n", a, b);
+// }

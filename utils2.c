@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mikabuto <mikabuto@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/04 18:18:22 by mikabuto          #+#    #+#             */
+/*   Updated: 2022/01/04 18:18:22 by mikabuto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int	ft_min(int a, int b)
@@ -15,11 +27,11 @@ void	clear_tab(t_print *tab)
 	tab->pnt = 0;		// .
 	tab->dash = 0;		// -
 	tab->sign = 0;		//pos or neg numer
-	tab->is_zero = 0;	//is number zero?
 	tab->perc = 0;		// %
 	tab->sp = 0;		// ' '
 	tab->hash = 0;		// #
 	tab->plus = 0;		// +
+	tab->is_zero = 0;
 }
 
 void	ft_swap(char *a, char *b)
@@ -36,12 +48,14 @@ void	ft_putchar(char c, t_print *tab)
 	tab->tl += write(1, &c, 1);
 }
 
-int		ft_putstr(char *str, t_print *tab)
+int	ft_putstr(char *str, t_print *tab)
 {
-	while (*str)
+	int	i;
+
+	i = -1;
+	while (str[++i])
 	{
-		tab->tl += write(1, &str, 1);
-		str++;
+		tab->tl += write(1, &(str[i]), 1);
 	}
 	return (1);
 }
